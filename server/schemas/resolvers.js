@@ -45,7 +45,32 @@ const resolvers = {
   },
 
   //*CRUD requests and stuff
-  Mutation: {},
+  Mutation: {
+    //? adding basic stuff
+    addTeam: async (parent, { teamName }) => {
+      const newTeam = await Team.create({ teamName: teamName });
+      return newTeam;
+    },
+    addPlayer: async (parent, { username }) => {
+      const newPlayer = await Player.create({ username: username });
+      return newPlayer;
+    },
+    addKnife: async (parent, { knifeName, knifeSkin }) => {
+      const newKnife = await Knife.create({
+        name: knifeName,
+        skin: knifeSkin,
+      });
+      return newKnife;
+    },
+    addTournament: async (parent, { tournamentName }) => {
+      const newTournament = await Tournament.create({
+        name: tournamentName,
+      });
+    },
+
+    //? adding to lists
+    addKnifeToPlayer: async (parent, { username, knife }) => {},
+  },
 };
 
 module.exports = resolvers;

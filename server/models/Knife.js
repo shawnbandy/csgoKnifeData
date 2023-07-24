@@ -14,6 +14,12 @@ const knifeSchema = new Schema({
     unique: false,
     trim: true,
   },
+
+  appearanceCount: {
+    type: Number,
+    required: false,
+    unique: false,
+  },
 });
 
 const Knife = model('Knife', knifeSchema);
