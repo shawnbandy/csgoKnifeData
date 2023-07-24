@@ -69,7 +69,10 @@ const resolvers = {
     },
 
     //? adding to lists
-    addKnifeToPlayer: async (parent, { username, knife }) => {},
+    addKnifeToPlayer: async (parent, { username, knife }) => {
+      const player = await Player.findOne({ username: username });
+      console.log(player.knifeList);
+    },
   },
 };
 
