@@ -16,6 +16,6 @@ const tournamentSchema = new Schema({
   ],
 });
 
-const Tournament = model('Team', teamSchema);
+const Tournament = model('Tournament', tournamentSchema);
 
 module.exports = Tournament;

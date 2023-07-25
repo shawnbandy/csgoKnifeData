@@ -37,3 +37,7 @@ const matchSchema = new Schema({
     unique: false,
   },
 });
+
+const Match = model('Match', matchSchema);
+
+module.exports = Match;
