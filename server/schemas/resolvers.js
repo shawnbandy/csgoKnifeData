@@ -91,6 +91,7 @@ const resolvers = {
           player.knifeList[i].name == newKnife.name &&
           player.knifeList[i].skin == newKnife.skin
         ) {
+          console.log('Knife duplicate detected, upping appearance count');
           player.knifeList[i].appearanceCount++;
         } else {
           try {
