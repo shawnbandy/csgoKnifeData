@@ -38,7 +38,11 @@ const resolvers = {
       return Team.findOne({ _id: teamId }).populate('playerList');
     },
     playerListKnife: async (parent, { playerId }) => {
-      return Player.findOne({ _id: playerId }).populate('knifeList');
+      const player = await Player.findOne({ _id: playerId }).populate(
+        'knifeList'
+      );
+      console.log(player);
+      return player;
     },
     tournamentTeamList: async (parent, { tournamentId }) => {
       return Tournament.findOne({ _id: tournamentId }).populate('teamList');
@@ -71,45 +75,43 @@ const resolvers = {
     },
 
     //? adding to lists
-    addKnifeToPlayer: async (parent, { username, knife }) => {
+    addKnifeToPlayer: async (parent, { username, knifeName, knifeSkin }) => {
       console.log('--------------addKnifeToPlayer');
       console.log('--------------', username);
-      console.log('--------------', knife);
+      //console.log('--------------', knifeName);
 
       const newKnife = await Knife.create({
-        name: knife.name,
-        skin: knife.skin,
+        name: knifeName,
+        skin: knifeSkin,
         appearanceCount: 1,
       });
 
-      const player = await Player.findOne({ username: username }).populate(
-        'knifeList'
-      );
+      const playerExistingKnifeList = await Player.findOne({
+        username: username,
+      }).populate('knifeList');
 
-      for (let i = 0; i < player.knifeList.length; i++) {
+      console.log(playerExistingKnifeList.knifeList);
+
+      //*goes through the knife list of the player. If they already have the knife, then it ups the appearance count, then returns the playerExistingKnifeList
+      //TODO current issue is that appearance count does not update. I think it's because i'm trying to add to it, and not using the mongoose .findOneAndUpdate(). This does require me to grab the ID of the player knife, but if I already have the array it shouldn't be that bad. just need an async/await call
+      for (let i = 0; i < playerExistingKnifeList.knifeList.length; i++) {
+        console.log('in the for loop');
         if (
-          player.knifeList[i].name == newKnife.name &&
-          player.knifeList[i].skin == newKnife.skin
+          playerExistingKnifeList.knifeList[i].name == newKnife.name &&
+          playerExistingKnifeList.knifeList[i].skin == newKnife.skin
         ) {
-          console.log('Knife duplicate detected, upping appearance count');
-          player.knifeList[i].appearanceCount++;
-        } else {
-          try {
-            player.knifeList.push(newKnife);
-            await player.save();
-          } catch (error) {
-            console.error('error saving knife to player', error);
-          }
+          playerExistingKnifeList.knifeList[i].appearanceCount += 1;
+          return playerExistingKnifeList;
         }
       }
 
-      //TODO: check to see if the player already has the knife name&skin within their knifeList. If yes, then update the knife's appearance count under that player. This would hopefully prevent duplicate entries
+      //*else, we add it to the player and return that
 
-      // const player = await Player.findOneAndUpdate(
-      //   { username: username },
-      //   { $addToSet: { knifeList: newKnife._id } },
-      //   { new: true }
-      // );
+      const player = await Player.findOneAndUpdate(
+        { username: username },
+        { $addToSet: { knifeList: newKnife } },
+        { new: true }
+      );
 
       return player;
     },

@@ -2,27 +2,32 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type Knife {
+    _id: ID
     name: String!
     skin: String!
     appearanceCount: Int
   }
 
   type Player {
+    _id: ID
     username: String!
     knifeList: [Knife]
   }
 
   type Team {
+    _id: ID
     teamName: String!
     playerList: [Player]
   }
 
   type Tournament {
+    _id: ID
     name: String!
     teamList: [Team]
   }
 
   type Match {
+    _id: ID
     map: String!
     team1: String!
     team1Score: Int!
