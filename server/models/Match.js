@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-//*may not need or delete, but would be interesting if I can get it to work
+//*may not be added, but would be interesting if I can get it to work
 //*idea is to record the match score between teams, and show the most used knife per map if possible
 //*may be misleading though cause a team can play a map more than others, making skewed results
 const matchSchema = new Schema({
