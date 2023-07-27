@@ -1,7 +1,28 @@
 import React from 'react';
+import KnifeAndSkins from './bodyComp/kAS';
+import TeamAndPlayers from './bodyComp/pAT';
+import Tournament from './bodyComp/tourn';
 
-function Body() {
-  return <body>Header</body>;
+const classes = {
+  display: 'container',
+  hidden: 'd-none',
+};
+
+function Body({ currentNav, handleNavChange }) {
+  return (
+    <body className="container text-center">
+      Body
+      <div className={currentNav == 'kAS' ? classes.display : classes.hidden}>
+        <KnifeAndSkins />
+      </div>
+      <div className={currentNav == 'tAP' ? classes.display : classes.hidden}>
+        <TeamAndPlayers />
+      </div>
+      <div className={currentNav == 'tourn' ? classes.display : classes.hidden}>
+        <Tournament />
+      </div>
+    </body>
+  );
 }
 
 export default Body;
