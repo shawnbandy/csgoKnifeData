@@ -10,7 +10,7 @@ const classes = {
 
 function Body({ currentNav, handleNavChange }) {
   return (
-    <body className="container text-center">
+    <body className="container text-center border border-secondary">
       Body
       <div className={currentNav == 'kAS' ? classes.display : classes.hidden}>
         <KnifeAndSkins />
