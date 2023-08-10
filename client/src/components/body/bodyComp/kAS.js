@@ -48,7 +48,7 @@ function KnifeAndSkins() {
       <div
         className={currentNav == 'cardView' ? classes.display : classes.hidden}
       >
-        <CardView />
+        <CardView data={fakeData} />
       </div>
       <div
         className={currentNav == 'listView' ? classes.display : classes.hidden}
